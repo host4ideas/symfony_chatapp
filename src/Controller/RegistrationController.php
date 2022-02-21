@@ -66,7 +66,7 @@ class RegistrationController extends AbstractController
     }
 
     /**
-     * @Route("/register", name="register-user")
+     * @Route("/register", name="app_register")
      */
     public function register(): Response
     {

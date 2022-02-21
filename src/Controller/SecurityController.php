@@ -1,22 +1,36 @@
 <?php
-namespace Controller;
 
-use Utils\UserOnline;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Doctrine\ORM\EntityManagerInterface;
+namespace App\Controller;
 
-class SecurityController
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
+
+class SecurityController extends AbstractController
 {
     /**
-     * @Route("/add/", name="add_online")
-     *
-     * Adds info about user to users online in database.
+     * @Route("/login", name="app_login")
      */
-    public function addOnlineUserAction(UserOnline $userOnline)
+    public function login(AuthenticationUtils $authenticationUtils): Response
     {
-        $this->get('session')->set('channel', 1);
-        $userOnline->addUserOnline($this->getUser(), 1);
+        if ($this->getUser()) {
+            return $this->redirectToRoute('messages');
+        }
 
-        return $this->redirectToRoute('chat_index');
+        // get the login error if there is one
+        $error = $authenticationUtils->getLastAuthenticationError();
+        // last username entered by the user
+        $lastUsername = $authenticationUtils->getLastUsername();
+
+        return $this->render('security/login.html.twig', ['last_username' => $lastUsername, 'error' => $error]);
+    }
+
+    /**
+     * @Route("/logout", name="app_logout")
+     */
+    public function logout()
+    {
+        throw new \LogicException('This method can be blank - it will be intercepted by the logout key on your firewall.');
     }
 }

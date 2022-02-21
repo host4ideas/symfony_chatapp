@@ -1,0 +1,46 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Chat
+{% endblock %}
+
+{% block body %}
+	<section class="container">
+		<div class="row">
+			<div class="col">
+				<h1>Chat</h1>
+				<p>Messaging Summary</p>
+				<p>Receipts :
+					{{ app.user.received|length }}</p>
+				<p>Sent :
+					{{ app.user.sent|length }}</p>
+				<a class="btn btn-primary" data-bs-toggle="offcanvas" href="#offcanvasExample" role="button" aria-controls="offcanvasExample">
+					My folders
+				</a>
+				<a href="{{path("send")}}" class="btn btn-primary">Sent message</a>
+			</div>
+		</div>
+	</section>
+	<div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
+		<div class="offcanvas-header">
+			<h2 class="offcanvas-title" id="offcanvasExampleLabel">Mes dossiers</h2>
+			<button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+		</div>
+		<div class="offcanvas-body">
+			<div class="list-group">
+				<a href="{{ path("messages") }}" class="list-group-item list-group-item-action active">Home</a>
+			</div>
+			<div class="list-group">
+				<a href="{{ path("received") }}" class="list-group-item list-group-item-action">mailbox</a>
+			</div>
+			<div class="list-group">
+				<a href="{{ path("sent") }}" class="list-group-item list-group-item-action">Sent messages</a>
+			</div>
+		</div>
+	</div>
+{% endblock %}
+
+{% block footer %}
+	<footer>
+		<a class="btn btn-primary" href=" {{ path('app_logout') }} " role="button">LOGOUT</a>
+	</footer>
+{% endblock %}

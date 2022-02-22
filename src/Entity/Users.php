@@ -48,16 +48,6 @@ class Users implements UserInterface
      */
     private $received;
 
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    private $pfp;
-
-    /**
-     * @ORM\Column(type="boolean")
-     */
-    private $isVerified = false;
-
     public function __construct()
     {
         $this->sent = new ArrayCollection();
@@ -67,16 +57,6 @@ class Users implements UserInterface
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    /**
-     * A visual identifier that represents this user.
-     *
-     * @see UserInterface
-     */
-    public function getUserIdentifier(): string
-    {
-        return (string) $this->email;
     }
 
     public function getEmail(): ?string
@@ -211,35 +191,6 @@ class Users implements UserInterface
                 $received->setRecipient(null);
             }
         }
-
-        return $this;
-    }
-
-
-    public function isVerified(): bool
-    {
-        return $this->isVerified;
-    }
-
-    public function setIsVerified(bool $isVerified): self
-    {
-        $this->isVerified = $isVerified;
-
-        return $this;
-    }
-    public function __toString()
-    {
-        return $this->email;
-    }
-
-    public function getPfp(): ?string
-    {
-        return $this->pfp;
-    }
-
-    public function setPfp(string $pfp): self
-    {
-        $this->pfp = $pfp;
 
         return $this;
     }
